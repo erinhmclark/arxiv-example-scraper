@@ -10,6 +10,9 @@ packages = [{include = "arxiv_example_scraper"}]
 python = "^3.11"
 bs4 = "^0.0.1"
 requests = "^2.30.0"
+sqlite-utils = "^3.31"
+arxiv = "^1.4.7"
+pyyaml = "^6.0"
 
 
 [tool.poetry.group.dev.dependencies]
