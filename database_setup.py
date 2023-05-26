@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS {LINKS} (
 """
 CURSOR.execute(create_links_table_query)
 
-# Create raw responses table?
 
 CONN.commit()
 CONN.close()
