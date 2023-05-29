@@ -9,7 +9,13 @@ import arxiv
 from arxiv import Result
 from mysql.connector.connection import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
-from settings import MYSQL_DB_NAME, API_RESPONSE, SEARCH_QUERY, SEARCH_LIMIT, MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD
+from settings import (MYSQL_DB_NAME,
+                      API_RESPONSE,
+                      SEARCH_QUERY,
+                      SEARCH_LIMIT,
+                      MYSQL_HOST,
+                      MYSQL_USER,
+                      MYSQL_PASSWORD)
 
 
 def establish_connection(user: str, password: str, host: str, db: str) -> MySQLConnection:
@@ -40,8 +46,8 @@ def clean_result(result: Result) -> dict:
 def insert_into_db(cursor: MySQLCursor, result: dict) -> None:
     """Inserts the given result into the database using the provided cursor."""
     insert_query = f"""
-    INSERT INTO {API_RESPONSE} (entry_id, article_link, updated, published, title, summary, comment, 
-                                journal_ref, doi, primary_category, pdf_url, raw_json)
+    INSERT INTO {API_RESPONSE} (entry_id, article_link, updated, published, title, summary, 
+                                comment, journal_ref, doi, primary_category, pdf_url, raw_json)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     ON DUPLICATE KEY UPDATE
     article_link = VALUES(article_link),
@@ -57,9 +63,10 @@ def insert_into_db(cursor: MySQLCursor, result: dict) -> None:
     raw_json = VALUES(raw_json)
     """
     cursor.execute(insert_query, (
-        result['entry_id'], result['article_link'], result['updated'], result['published'], result['title'],
-        result['summary'], result['comment'], result['journal_ref'], result['doi'], result['primary_category'],
-        result['pdf_url'], result['_raw']))
+        result['entry_id'], result['article_link'], result['updated'],
+        result['published'], result['title'], result['summary'],
+        result['comment'], result['journal_ref'], result['doi'],
+        result['primary_category'], result['pdf_url'], result['_raw']))
 
     for author in result['authors']:
         cursor.execute("INSERT INTO arxiv_authors (entry_id, author) VALUES (%s, %s)",
@@ -70,7 +77,8 @@ def insert_into_db(cursor: MySQLCursor, result: dict) -> None:
                        (result['entry_id'], category))
 
     for link in result['links']:
-        cursor.execute("INSERT INTO arxiv_links (entry_id, link, content_type, title, rel) VALUES (%s, %s, %s, %s, %s)",
+        cursor.execute("INSERT INTO arxiv_links (entry_id, link, content_type, title, rel) "
+                       "VALUES (%s, %s, %s, %s, %s)",
                        (result['entry_id'], link.href, link.content_type, link.title, link.rel))
 
 
