@@ -3,6 +3,7 @@
 This repository contains a Python script for extracting data from the ArXiv API and storing the response in a MySQL database. 
 The script uses the Python package [arxiv](https://pypi.org/project/arxiv/) to interact with the arXiv API.
 
+
 ## Installation
 
 This project used a [Poetry](https://python-poetry.org/) environment to store the dependencies.
@@ -34,7 +35,11 @@ python api_arxiv_articles.py
 
 ## Extensions
 
-- Create a Docker image for the scraper
-- Run this on a remote server
-- Schedule this to run at regular time intervals
-- Add an alert system such as email or slack
+- Create scrapers and run benchmarks to compare efficiency
+  - Using the requests module
+  - Using automation such as Selenium
+  - Using ScraPy
+- Dockerize the process
+  - Dockerfile for MySQL database, modify database_setup python file to SQL file to be 
+  - Docker compose file to connect script and database containers
+- Schedule trigger for scraper
