@@ -13,6 +13,6 @@ CATEGORIES_TABLE_NAME = 'arxiv_categories'
 SEARCH_LIMIT = 100
 
 MYSQL_DB_NAME = 'arxiv'
-MYSQL_HOST = os.environ.get('MYSQL_HOST')
+MYSQL_HOST = 'db'
 MYSQL_USER = os.environ.get('MYSQL_ARXIV_USER')
 MYSQL_PASSWORD = os.environ.get('MYSQL_ARXIV_PASSWORD')
