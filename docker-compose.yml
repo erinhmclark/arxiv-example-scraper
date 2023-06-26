@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  scraper:
+    build: ./
+    depends_on:
+      - db
+    command: bash -c "sleep 30 && python api_arxiv_articles.py"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+  db:
+    build: ./db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: arxiv
+      MYSQL_USER: ${MYSQL_ARXIV_USER}
+      MYSQL_PASSWORD: ${MYSQL_ARXIV_PASSWORD}
+volumes:
+  mysql_data:
